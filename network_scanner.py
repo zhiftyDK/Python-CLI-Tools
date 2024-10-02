@@ -4,11 +4,15 @@ import argparse
 import threading
 from scapy.all import srp, Ether, ARP, conf
 import re
+import sys
 
 conf.sniff_promisc = False
 
 parser = argparse.ArgumentParser(formatter_class=lambda prog: argparse.HelpFormatter(prog,max_help_position=200))
 parser.add_argument("-i", "--iprange", help="Ip range for network scan")
+if len(sys.argv)==1:
+    parser.print_help(sys.stderr)
+    sys.exit(1)
 args = parser.parse_args()
 
 ip_range = args.iprange
@@ -29,7 +33,7 @@ def checkIP(ip):
     print(f"[+] Hostname: {hostname}, IP Address: {ip}, MAC Address: {mac_address}")
 
 #Get ip subnet and split into array
-ip_add_range_pattern = re.compile("^(?:[0-9]{1,3}\.){3}[0-9]{1,3}/[0-9]*$")
+ip_add_range_pattern = re.compile(r"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}/[0-9]*$")
 if ip_add_range_pattern.search(ip_range):
     print(f"[!] Scanning network in range: {ip_range}...")
     threads = []

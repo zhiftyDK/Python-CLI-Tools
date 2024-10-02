@@ -12,6 +12,9 @@ parser = argparse.ArgumentParser(formatter_class=lambda prog: argparse.HelpForma
 parser.add_argument("-t", "--target", help="Victim IP Address to ARP poison")
 parser.add_argument("-g", "--gateway", help="Gateway IP Address")
 parser.add_argument("-r", "--routing", action="store_true", help="Enable IP Routing")
+if len(sys.argv)==1:
+    parser.print_help(sys.stderr)
+    sys.exit(1)
 args = parser.parse_args()
 
 ip_target, ip_gateway, ip_routing = args.target, args.gateway, args.routing
