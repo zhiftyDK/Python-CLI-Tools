@@ -1,5 +1,4 @@
 from scapy.all import Ether, ARP, srp, send, conf
-from services import WService
 import argparse
 import time
 import sys
@@ -38,6 +37,7 @@ try:
     if ip_routing:
         print("[!] Enabling IP Routing...")
         if "nt" in os.name:
+            from services import WService
             service = WService("RemoteAccess")
             service.start()
         else:
@@ -54,6 +54,7 @@ except KeyboardInterrupt:
     if ip_routing:
         print("[!] Disabling IP Routing...")
         if "nt" in os.name:
+            from services import WService
             service = WService("RemoteAccess")
             service.stop()
         else:
