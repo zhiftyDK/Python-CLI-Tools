@@ -1,3 +1,5 @@
+import logging
+logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 import ipaddress
 import socket
 import argparse

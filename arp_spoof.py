@@ -1,3 +1,5 @@
+import logging
+logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 from scapy.all import Ether, ARP, srp, sendp, conf
 import argparse
 import time
