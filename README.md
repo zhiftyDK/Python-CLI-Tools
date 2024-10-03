@@ -1,4 +1,4 @@
-##### ⚠️ Stricly for learning purposes and ethical hacking
+##### ⚠️ Stricly for educational purposes and ethical hacking
 ## Python CLI Tools
 
 #### 🛠️ Tools:
