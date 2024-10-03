@@ -39,13 +39,17 @@ ip_add_range_pattern = re.compile(r"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}/[0-9]*$")
 if ip_add_range_pattern.search(ip_range):
     print(f"[!] Scanning network in range: {ip_range}...")
     threads = []
-    for ip in ipaddress.IPv4Network('192.168.1.0/24'):
-        ip = str(ip)
-        t = threading.Thread(target=checkIP, args=(ip,))
-        threads.append(t)
-        t.start()
-    for t in threads:
-        t.join()
+    try:
+        for ip in ipaddress.IPv4Network(ip_range):
+            ip = str(ip)
+            t = threading.Thread(target=checkIP, args=(ip,), daemon=True)
+            threads.append(t)
+            t.start()
+        for t in threads:
+            t.join()
+    except KeyboardInterrupt:
+        print("[!] Network scan stopped.")
+        sys.exit()
     print("[!] Network scan completed.")
 else:
     print("[-] Invalid ip range, example: 192.168.1.0/24")
