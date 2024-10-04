@@ -2,7 +2,6 @@ import argparse
 import subprocess
 import sys
 import os
-import datetime
 
 parser = argparse.ArgumentParser(formatter_class=lambda prog: argparse.HelpFormatter(prog,max_help_position=200))
 parser.add_argument("-i", "--interface", help="Network interface", required=True)
