@@ -6,7 +6,7 @@ import os
 
 parser = argparse.ArgumentParser(formatter_class=lambda prog: argparse.HelpFormatter(prog,max_help_position=200))
 parser.add_argument("-i", "--interface", help="Network interface", required=True)
-parser.add_argument("-w", "--whitelist", help="Path to txt file containing urls that should be sniffed", required=True)
+parser.add_argument("-w", "--whitelist", help="Path to txt file containing urls that should be sniffed")
 if len(sys.argv)==1:
     parser.print_help(sys.stderr)
     sys.exit(1)
