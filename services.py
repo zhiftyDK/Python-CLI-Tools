@@ -1,4 +1,4 @@
-from win32 import win32service
+import win32serviceutil as win32service
 import time
 
 class WService:
